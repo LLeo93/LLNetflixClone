@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-// Funzione per ottenere la data formattata in italiano
 function getFormattedDate() {
   const options = {
     weekday: 'long',

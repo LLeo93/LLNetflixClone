@@ -1,9 +1,7 @@
-/* bottone toggle per dispositivi mobili */
 .navbar-toggler-icon {
   background-color: grey !important;
 }
 
-/*  bottone toggle */
 .navbar-toggler {
   background-color: transparent !important;
 }

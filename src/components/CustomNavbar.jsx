@@ -34,14 +34,13 @@ const CustomNavbar = function (props) {
                 >
                   TV Shows
                 </Nav.Link>
-                <Nav.Link href="#" className="text-white fw-bold">
-                  Movies
-                </Nav.Link>
-                <Nav.Link href="#" className="text-white fw-bold">
-                  Recently Added
-                </Nav.Link>
-                <Nav.Link href="#" className="text-white fw-bold">
-                  My List
+
+                <Nav.Link
+                  as={Link}
+                  to="/SearchPage"
+                  className="text-white fw-bold"
+                >
+                  Search
                 </Nav.Link>
               </Nav>
 

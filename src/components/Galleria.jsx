@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel, Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; // Importa Link da react-router-dom
+import { Link } from 'react-router-dom';
 
 const FilmGallery = ({ title, searchTerm }) => {
   const [movies, setMovies] = useState([]);
@@ -98,7 +98,6 @@ const FilmGallery = ({ title, searchTerm }) => {
                             overflow: 'hidden',
                           }}
                         >
-                          {/* Cliccabile per navigare al dettaglio del film */}
                           <Link to={`/movie/${movie.imdbID}`}>
                             <img
                               className="d-block w-100 img-fluid"

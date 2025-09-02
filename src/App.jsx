@@ -10,6 +10,7 @@ import UserProfile from './components/Profilo';
 import HomeAlert from './components/HomeAlert';
 import TvShows from './components/TvShows';
 import MovieDetails from './components/MovieDetails';
+import SearchPage from './components/SearchPage';
 function App() {
   return (
     <Router>
@@ -27,6 +28,7 @@ function App() {
               }
             />
 
+            <Route path="/SearchPage" element={<SearchPage />}></Route>
             <Route
               path="/"
               element={
