@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Row, Col, Spinner, Alert } from 'react-bootstrap';
 
@@ -9,7 +9,7 @@ const SearchPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const apiKey = '73815f65'; //
+  const apiKey = '73815f65';
 
   const handleSearch = async (e) => {
     e.preventDefault();

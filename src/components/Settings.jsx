@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Row, Col, Nav, Tab } from 'react-bootstrap';
 
 const Settings = () => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -34,10 +33,10 @@ function App() {
               element={
                 <>
                   <HomeAlert
-                    message="Ciao Stefano! questo alert sparirà tra 20 secondi o al tuo click della x. 
-                  la pagina è responsive e ci ho collegato profile page e setting page,
-                   i pulsanti dinamici sono home profilo settings le foto e il carosello,
-                    in mobile pure i dropdown e il pulsante osceno col bg grigio bruttissimo
+                    message="Ciao ! 
+                  la pagina è responsive, collegamenti a profile page e setting page,
+                  pulsanti dinamici:home, profilo, settings, foto e carosello.
+                    in mobile pure i dropdown e il pulsante col bg grigio
                     le opzioni delle altre pagine sono dinamiche e il carosello mostra meno slide 
                     in base ai breakpoints"
                   />

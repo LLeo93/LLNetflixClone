@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container, Row, Col, Nav, Tab, Button, Form } from 'react-bootstrap';
 
 const UserProfile = () => {

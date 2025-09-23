@@ -80,8 +80,9 @@ const CustomNavbar = function (props) {
 
       <div className="d-flex justify-content-between text-white bg-black p-3">
         <div className="d-flex align-items-center">
-          <h2 className="mb-0 ps-4">TV Shows</h2>
-
+          <Nav.Link as={Link} to="/TvShows">
+            <h2 className="mb-0 ps-4">TV Shows</h2>
+          </Nav.Link>
           <Dropdown className="ms-4 mt-1">
             <Dropdown.Toggle
               variant="secondary"

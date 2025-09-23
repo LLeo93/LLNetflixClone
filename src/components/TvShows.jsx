@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Card,
   Container,
@@ -24,7 +24,7 @@ const TvShows = function ({ title, searchTerm }) {
         .then((data) => {
           if (data.Response === 'True') {
             setMovies(data.Search);
-            setSelectedMovie(data.Search[0]); // seleziona il primo film
+            setSelectedMovie(data.Search[0]);
             setError(null);
           } else {
             setError('Nessun film trovato.');
@@ -50,33 +50,44 @@ const TvShows = function ({ title, searchTerm }) {
   if (!selectedMovie) return null;
 
   return (
-    <Card className="m-auto w-25">
-      <Card.Img
-        style={{ height: 350 }}
-        variant="top"
-        src={
-          selectedMovie.Poster !== 'N/A'
-            ? selectedMovie.Poster
-            : 'https://via.placeholder.com/300x450?text=Nessuna+Immagine'
-        }
-      />
-      <Card.Body>
-        <Card.Title>{selectedMovie.Title}</Card.Title>
-        <Card.Text>Anno: {selectedMovie.Year}</Card.Text>
-        <Button
-          variant="primary"
-          href={`https://www.imdb.com/title/${selectedMovie.imdbID}`}
-          target="_blank"
-        >
-          Vedi su IMDb
-        </Button>
-        <Link to={`/details/${selectedMovie.imdbID}`}>
-          <Button variant="warning" className="mx-3">
-            Dettagli
-          </Button>
-        </Link>
-      </Card.Body>
-    </Card>
+    <Row className="m-auto mt-4 justify-content-center">
+      <Col xs={10} md={6}>
+        <Card className="m-auto">
+          <Card.Img
+            style={{ height: 350 }}
+            variant="top"
+            src={
+              selectedMovie.Poster !== 'N/A'
+                ? selectedMovie.Poster
+                : 'https://via.placeholder.com/300x450?text=Nessuna+Immagine'
+            }
+          />
+          <Card.Body>
+            <Card.Title>{selectedMovie.Title}</Card.Title>
+            <Card.Text>Anno: {selectedMovie.Year}</Card.Text>
+            <div className="d-flex gap-2">
+              <Button
+                variant="primary"
+                href={`https://www.imdb.com/title/${selectedMovie.imdbID}`}
+                target="_blank"
+                className="flex-fill"
+              >
+                Vedi su IMDb
+              </Button>
+
+              <Button
+                as={Link}
+                to={`/details/${selectedMovie.imdbID}`}
+                variant="warning"
+                className="flex-fill, text-white"
+              >
+                Dettagli
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

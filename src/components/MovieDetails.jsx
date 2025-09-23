@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Spinner, Alert, Row, Col } from 'react-bootstrap';
 
 const MovieDetails = () => {
-  // Usa useParams() per ottenere il parametro "imdbID" dalla URL
   const { imdbID } = useParams();
 
   const [movie, setMovie] = useState(null);
@@ -11,11 +10,10 @@ const MovieDetails = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch dei dettagli del film
     fetch(`http://www.omdbapi.com/?apikey=73815f65&i=${imdbID}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data); // Aggiungi il log per debuggare la risposta
+        console.log(data);
 
         if (data.Response === 'True') {
           setMovie(data);
@@ -34,12 +32,16 @@ const MovieDetails = () => {
 
   return (
     <Row className="m-auto mt-4 justify-content-center">
-      <Col md={6} className="mb-4">
-        <Card className="d-flex flex-row" style={{ maxWidth: '600px' }}>
+      <Col lg={6} className="mb-4">
+        <Card
+          className="d-flex flex-column flex-md-row"
+          style={{ maxWidth: '600px' }}
+        >
           <Card.Img
             variant="top"
             src={movie.Poster}
-            style={{ maxWidth: '200px', height: 'auto' }}
+            className="w-100 w-md-auto"
+            style={{ height: 'auto' }}
           />
           <Card.Body className="d-flex flex-column justify-content-between">
             <Card.Title>{movie.Title}</Card.Title>
