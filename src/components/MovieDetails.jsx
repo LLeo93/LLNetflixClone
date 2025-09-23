@@ -10,20 +10,38 @@ const MovieDetails = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=73815f65&i=${imdbID}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+    const fetchMovie = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        let data;
+
+        if (import.meta.env.VITE_OMDB_API_KEY) {
+          const res = await fetch(
+            `https://www.omdbapi.com/?apikey=${
+              import.meta.env.VITE_OMDB_API_KEY
+            }&i=${imdbID}`
+          );
+          data = await res.json();
+        } else {
+          const res = await fetch(`/api/omdb?i=${imdbID}`);
+          data = await res.json();
+        }
 
         if (data.Response === 'True') {
           setMovie(data);
-          setError(null);
         } else {
           setError('Film non trovato.');
         }
-      })
-      .catch(() => setError('Errore durante la richiesta'))
-      .finally(() => setLoading(false));
+      } catch {
+        setError('Errore durante la richiesta.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMovie();
   }, [imdbID]);
 
   if (loading) return <Spinner animation="border" />;
@@ -39,7 +57,11 @@ const MovieDetails = () => {
         >
           <Card.Img
             variant="top"
-            src={movie.Poster}
+            src={
+              movie.Poster !== 'N/A'
+                ? movie.Poster
+                : 'https://via.placeholder.com/300x450?text=Nessuna+Immagine'
+            }
             className="w-100 w-md-auto"
             style={{ height: 'auto' }}
           />

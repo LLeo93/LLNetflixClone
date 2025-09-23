@@ -18,15 +18,9 @@ const FilmGallery = ({ title, searchTerm }) => {
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
+    const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
@@ -34,34 +28,48 @@ const FilmGallery = ({ title, searchTerm }) => {
   }, [windowWidth]);
 
   useEffect(() => {
-    const fetchMovies = () => {
-      fetch(`http://www.omdbapi.com/?apikey=73815f65&s=${searchTerm}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.Response === 'True') {
-            setMovies(data.Search);
-          } else {
-            setError('Nessun film trovato.');
-          }
-        })
-        .catch((error) => {
-          setError('Errore durante il recupero dei dati.');
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+    if (!searchTerm) return;
+
+    const fetchMovies = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        let data;
+
+        if (import.meta.env.VITE_OMDB_API_KEY) {
+          const res = await fetch(
+            `https://www.omdbapi.com/?apikey=${
+              import.meta.env.VITE_OMDB_API_KEY
+            }&s=${encodeURIComponent(searchTerm)}`
+          );
+          data = await res.json();
+        } else {
+          const res = await fetch(
+            `/api/omdb?s=${encodeURIComponent(searchTerm)}`
+          );
+          data = await res.json();
+        }
+
+        if (data.Response === 'True') {
+          setMovies(data.Search);
+        } else {
+          setError('Nessun film trovato.');
+          setMovies([]);
+        }
+      } catch {
+        setError('Errore durante il recupero dei dati.');
+        setMovies([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchMovies();
   }, [searchTerm]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   const slides = [];
   for (let i = 0; i < movies.length; i += slidesPerView) {
@@ -75,7 +83,7 @@ const FilmGallery = ({ title, searchTerm }) => {
   return (
     <div className="film-gallery">
       <h3 className="text-white">{title}</h3>
-      <Container fluid="true" style={{ padding: 0 }}>
+      <Container fluid style={{ padding: 0 }}>
         <Row className="justify-content-center">
           <Col xs={12} className="text-center">
             <Carousel
@@ -101,7 +109,11 @@ const FilmGallery = ({ title, searchTerm }) => {
                           <Link to={`/movie/${movie.imdbID}`}>
                             <img
                               className="d-block w-100 img-fluid"
-                              src={movie.Poster}
+                              src={
+                                movie.Poster !== 'N/A'
+                                  ? movie.Poster
+                                  : 'https://via.placeholder.com/300x450?text=Nessuna+Immagine'
+                              }
                               alt={movie.Title}
                               style={{
                                 maxHeight: '300px',
@@ -123,30 +135,11 @@ const FilmGallery = ({ title, searchTerm }) => {
                             style={{
                               bottom: 0,
                               left: 0,
-                              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                              width: '100%',
+                              backgroundColor: 'rgba(0,0,0,0.7)',
                             }}
                           >
                             <h5>{movie.Title}</h5>
                             <p>{movie.Year}</p>
-                          </div>
-
-                          <div
-                            className="carousel-item-hover position-absolute w-100 text-center p-3 text-white d-flex align-items-center justify-content-center"
-                            style={{
-                              top: '50%',
-                              left: '50%',
-                              transform: 'translate(-50%, -50%)',
-                              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                              opacity: 0,
-                              transition: 'opacity 0.3s ease',
-                              borderRadius: '8px',
-                            }}
-                          >
-                            <div className="hover-text">
-                              <h5>{movie.Title}</h5>
-                              <p>{movie.Year}</p>
-                            </div>
                           </div>
                         </div>
                       </Col>

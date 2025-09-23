@@ -1,45 +1,52 @@
 import { useState, useEffect } from 'react';
-import {
-  Card,
-  Container,
-  Row,
-  Col,
-  Button,
-  Spinner,
-  Alert,
-} from 'react-bootstrap';
+import { Card, Row, Col, Button, Spinner, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const TvShows = function ({ title, searchTerm }) {
+const TvShows = ({ title, searchTerm }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    const fetchMovies = () => {
+    if (!searchTerm) return;
+
+    const fetchMovies = async () => {
       setLoading(true);
-      fetch(`http://www.omdbapi.com/?apikey=73815f65&s=${searchTerm}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.Response === 'True') {
-            setMovies(data.Search);
-            setSelectedMovie(data.Search[0]);
-            setError(null);
-          } else {
-            setError('Nessun film trovato.');
-            setMovies([]);
-            setSelectedMovie(null);
-          }
-        })
-        .catch(() => {
-          setError('Errore durante il recupero dei dati.');
+      setError(null);
+
+      try {
+        let data;
+
+        if (import.meta.env.VITE_OMDB_API_KEY) {
+          const res = await fetch(
+            `https://www.omdbapi.com/?apikey=${
+              import.meta.env.VITE_OMDB_API_KEY
+            }&s=${encodeURIComponent(searchTerm)}`
+          );
+          data = await res.json();
+        } else {
+          const res = await fetch(
+            `/api/omdb?s=${encodeURIComponent(searchTerm)}`
+          );
+          data = await res.json();
+        }
+
+        if (data.Response === 'True') {
+          setMovies(data.Search);
+          setSelectedMovie(data.Search[0]);
+        } else {
+          setError('Nessun film trovato.');
           setMovies([]);
           setSelectedMovie(null);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+        }
+      } catch {
+        setError('Errore durante il recupero dei dati.');
+        setMovies([]);
+        setSelectedMovie(null);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchMovies();
@@ -79,7 +86,7 @@ const TvShows = function ({ title, searchTerm }) {
                 as={Link}
                 to={`/details/${selectedMovie.imdbID}`}
                 variant="warning"
-                className="flex-fill, text-white"
+                className="flex-fill text-white"
               >
                 Dettagli
               </Button>
