@@ -46,7 +46,7 @@ Bash
 npm run dev
 L'app sarà disponibile all'indirizzo http://localhost:5173 (o su una porta diversa se la 5173 è già in uso).
 
-🌐 Deploy :
+🌐 Deploy : https://ll-netflixdue.vercel.app/
 
 🌟 Sei un Recruiter?
 Se sei interessato a saperne di più sul mio percorso e sulle mie competenze, o a discutere di opportunità di lavoro, sentiti libero di esplorare il mio Portfolio o di contattarmi direttamente.
