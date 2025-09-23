@@ -9,7 +9,8 @@ const SearchPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const apiKey = '73815f65';
+  const apiKey = import.meta.env.VITE_OMDB_API_KEY;
+  const isLocal = !!apiKey;
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -23,9 +24,11 @@ const SearchPage = () => {
     }
 
     try {
-      const response = await fetch(
-        `http://www.omdbapi.com/?apikey=${apiKey}&s=${query}`
-      );
+      const url = isLocal
+        ? `https://www.omdbapi.com/?apikey=${apiKey}&s=${query}`
+        : `/api/omdb?s=${query}`;
+
+      const response = await fetch(url);
       const data = await response.json();
 
       if (data.Response === 'True') {
@@ -33,7 +36,7 @@ const SearchPage = () => {
       } else {
         setError('Nessun film trovato.');
       }
-    } catch (error) {
+    } catch {
       setError('Errore durante la ricerca.');
     }
     setLoading(false);
@@ -43,12 +46,14 @@ const SearchPage = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch(
-        `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`
-      );
+      const url = isLocal
+        ? `https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`
+        : `/api/omdb?i=${imdbID}`;
+
+      const response = await fetch(url);
       const data = await response.json();
       setSelectedMovie(data);
-    } catch (error) {
+    } catch {
       setError('Errore durante il recupero dei dettagli.');
     }
     setLoading(false);
@@ -91,7 +96,7 @@ const SearchPage = () => {
             </div>
           )}
           {error && <Alert variant="danger">{error}</Alert>}
-          {!loading && movies.length === 0 && !error && <p>Cerca Un Film.</p>}
+          {!loading && movies.length === 0 && !error && <p>Cerca un film.</p>}
 
           <Row xs={1} sm={2} md={3} lg={4} className="g-4">
             {movies.map((movie) => (
