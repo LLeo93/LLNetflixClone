@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Row, Col, Spinner, Alert } from 'react-bootstrap';
+import { Card, Row, Col, Spinner, Alert, Nav } from 'react-bootstrap';
 
 const SearchPage = () => {
   const [query, setQuery] = useState('');
@@ -71,7 +71,9 @@ const SearchPage = () => {
             alt="Logo Netflix"
             style={{ width: '150px' }}
           />
-          <button className="btn btn-outline-light">Accedi</button>
+          <Nav.Link href="https://www.netflix.com/it/login">
+            <button className="btn btn-outline-light">Accedi</button>
+          </Nav.Link>
         </div>
 
         <div className="d-flex justify-content-center mt-5">

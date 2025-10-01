@@ -60,7 +60,12 @@ const CustomNavbar = function (props) {
                   Settings
                 </Nav.Link>
 
-                <Nav.Link href="#" className="text-white">
+                <Nav.Link
+                  href="#"
+                  className="text-white"
+                  as={Link}
+                  to="/SearchPage"
+                >
                   <i className="bi bi-search"></i>
                 </Nav.Link>
                 <Nav.Link href="#" className="text-white fw-bold">

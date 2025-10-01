@@ -58,7 +58,7 @@ const TvShows = ({ title, searchTerm }) => {
 
   return (
     <Row className="m-auto mt-4 justify-content-center">
-      <Col xs={10} md={6}>
+      <Col xs={10} md={6} lg={4}>
         <Card className="m-auto">
           <Card.Img
             style={{ height: 350 }}
