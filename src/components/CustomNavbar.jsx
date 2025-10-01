@@ -68,13 +68,22 @@ const CustomNavbar = function (props) {
                 >
                   <i className="bi bi-search"></i>
                 </Nav.Link>
-                <Nav.Link href="#" className="text-white fw-bold">
+                <Nav.Link
+                  href="https://www.netflix.com/it/login"
+                  className="text-white fw-bold"
+                >
                   KIDS
                 </Nav.Link>
-                <Nav.Link href="#" className="text-white">
+                <Nav.Link
+                  href="https://www.netflix.com/it/login"
+                  className="text-white"
+                >
                   <i className="bi bi-bell"></i>
                 </Nav.Link>
-                <Nav.Link href="#" className="text-white">
+                <Nav.Link
+                  href="https://www.netflix.com/it/login"
+                  className="text-white"
+                >
                   <i className="bi bi-person-circle"></i>
                 </Nav.Link>
               </Nav>
